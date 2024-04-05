@@ -10,6 +10,7 @@ class WeatherPlug {
     const char* password;
     const char* apiKey;
     const char* serverUrl;
+    const char* serverPort;
 
     float environmentTemperature;
     float environmentHumidity;
@@ -18,7 +19,7 @@ class WeatherPlug {
     WiFiClient client;
 
   public:
-    WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl);
+    WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl, const char* serverPort);
     void connectWiFi();
     void readSensors();
     void sendData(int postSendDelay);

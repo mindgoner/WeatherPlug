@@ -1,10 +1,11 @@
 #include "WeatherPlug.h"
 
-WeatherPlug::WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl) {
+WeatherPlug::WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl, const char* serverPort) {
   this->ssid = ssid;
   this->password = password;
   this->apiKey = apiKey;
   this->serverUrl = serverUrl;
+  this->serverPort = serverPort;
 }
 
 void WeatherPlug::connectWiFi() {
@@ -33,24 +34,27 @@ String WeatherPlug::getMACAddress() {
 
 void WeatherPlug::sendData(int postSendDelay = 1) {
   if (WiFi.status() == WL_CONNECTED) {
-    if (client.connect(serverUrl, 80)) {
-      DynamicJsonDocument doc(200);
-      doc["temperature"] = environmentTemperature;
-      doc["humidity"] = environmentHumidity;
-      doc["pressure"] = atmosphericPressure;
-      doc["auth_key"] = apiKey;
-      doc["mac_address"] = getMACAddress();
-
-      String jsonData;
-      serializeJson(doc, jsonData);
-
-      client.println("GET /sendData?" + jsonData + " HTTP/1.1");
-      client.println("Host: " + String(serverUrl));
-      client.println("Connection: close");
-      client.println();
-    } else {
-      Serial.println("Connection to server failed");
-    }
+    uint16_t port = atoi(serverPort);
+      // Łączenie z serwerem
+      if (!client.connect(String(serverUrl), port)) {
+        Serial.println("Connection failed");
+        return;
+      }
+    
+      // Wysłanie żądania GET do serwera
+      client.print("GET /collect HTTP/1.1\r\n");
+      client.print("Host: "+String(serverUrl)+"\r\n");
+      client.print("Connection: close\r\n\r\n");
+    
+      Serial.println("Request sent");
+    
+      // Oczekiwanie na odpowiedź
+      while (client.connected()) {
+        if (client.available()) {
+          // Wypisanie odpowiedzi serwera na Serial Monitor
+          Serial.write(client.read());
+        }
+      }
   } else {
     Serial.println("Not connected to WiFi");
   }
