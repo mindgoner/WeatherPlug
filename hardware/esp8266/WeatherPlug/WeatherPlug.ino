@@ -1,10 +1,10 @@
 #include "WeatherPlug.h"
 
-const char* ssid = "WIFI";
-const char* password = "PASSWORD";
+const char* ssid = "Minerva";
+const char* password = "La'R0s3s";
 const char* apiKey = "ABCabc123DEFdef456";
 const char* serverUrl = "weatherplug.com";
-const char* serverPort = "80";
+const char* serverPort = "443";
 
 WeatherPlug WeatherPlug(ssid, password, apiKey, serverUrl, serverPort);
 

@@ -1,4 +1,6 @@
 #include "WeatherPlug.h"
+#include <ESP8266HTTPClient.h>
+HTTPClient https;
 
 WeatherPlug::WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl, const char* serverPort) {
   this->ssid = ssid;
@@ -42,7 +44,7 @@ void WeatherPlug::sendData(int postSendDelay = 1) {
       }
     
       // Wysłanie żądania GET do serwera
-      client.print("GET /collect HTTP/1.1\r\n");
+      client.print("GET /collector HTTP/1.1\r\n");
       client.print("Host: "+String(serverUrl)+"\r\n");
       client.print("Connection: close\r\n\r\n");
     
