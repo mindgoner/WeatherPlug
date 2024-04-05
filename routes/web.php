@@ -22,3 +22,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/collector', function () {
+    return response()->json([
+        'message' => 'Hello World!',
+    ]);
+});
