@@ -29,10 +29,10 @@
     </div><!-- .container -->
 
     <script>
-        var temperatures = <?php echo json_encode($temperatures); ?>;
-        var pressures  = <?php echo json_encode($pressures); ?>;
-        var humidities = <?php echo json_encode($humidities); ?>;
-        var timestamps = <?php echo json_encode($timestamps); ?>;
+        var temperatures = {{ json_encode($temperatures) }};
+        var pressures  = {{ json_encode($pressures) }};
+        var humidities = {{ json_encode($humidities) }};
+        var timestamps = {!! json_encode($timestamps) !!};
         // Sample data (replace with your own)
         var salesData = {
             labels: timestamps,
@@ -55,12 +55,14 @@
             }]
         };
 
+
         // Create chart
         var ctx = document.getElementById('salesStatistics').getContext('2d');
         var salesChart = new Chart(ctx, {
             type: 'line',
             data: salesData,
             options: {
+                animation: false,
                 scales: {
                     xAxes: [{
                         ticks: {
@@ -76,6 +78,11 @@
                 }
             }
         });
+
+
+        setTimeout(() => {
+            window.location.reload(1);
+        }, 1000);
     </script>
 </body>
 </html>
