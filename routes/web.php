@@ -5,7 +5,8 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Sensor;
-use App\Models\Odczyt;
+use App\Models\Readings;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,18 +38,36 @@ Route::get('/collector', function (Request $request) {
     }
 
     // Dopisać zbieranie odczytów (w zależności od godziny)
-    $Odczyt = new Odczyt();
-    $Odczyt->deviceId = $Sensor->id;
-    $Odczyt->Temperatura = $request->input('Temperatura');
-    $Odczyt->Cisnienie = $request->input('Cisnienie');
-    $Odczyt->Wilgotnosc = $request->input('Wilgotnosc');
+    $Readings = new Readings();
+    $Readings->deviceId = $Sensor->id;
+    $Readings->Temperatura = $request->input('Temperatura');
+    $Readings->Cisnienie = $request->input('Cisnienie');
+    $Readings->Wilgotnosc = $request->input('Wilgotnosc');
     
     
-    $Odczyt->save();
+    
+    
+    $Readings->save();
     
     return response()->json($request->all());
 
 });
 Route::get('/wykres/{deviceId}', function ($deviceId) {
-dd('test');
+    // Pobranie danych temperatury 
+    $readings = Readings::where('deviceid','=', $deviceId)->get(['Temperatura','Cisnienie', 'Wilgotnosc', 'created_at']);
+
+    $temperatures = [];
+    $pressures = [];
+    $humidities = [];
+    $timestamps = [];
+
+    foreach ($readings as $reading) {
+        $temperatures[] = $reading->Temperatura;
+        $pressures[] = $reading->Cisnienie;
+        $humidities[] = $reading->Wilgotnosc;
+        $timestamps[] = $reading->created_at->format('Y-m-d H:i:s'); // Konwersja na format zrozumiały dla JavaScript
+    }
+
+    // Wygenerowanie wykresu
+    return view('wykres', compact('temperatures', 'pressures', 'humidities', 'timestamps'));
 });

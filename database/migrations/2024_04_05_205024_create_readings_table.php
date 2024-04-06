@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('odczyts', function (Blueprint $table) {
+        Schema::create('readings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('deviceId');
             $table->double('Temperatura');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('odczyts');
+        Schema::dropIfExists('readings');
     }
 };
