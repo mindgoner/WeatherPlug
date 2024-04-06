@@ -22,7 +22,8 @@ class WeatherPlug {
     WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl, const char* serverPort);
     void connectWiFi();
     void readSensors();
-    void sendData(int postSendDelay);
+    void readSimulatedSensors();
+    void exchangeData(int postSendDelay);
     String getMACAddress();
 
     void setTemperature(float temperature);

@@ -1,7 +1,7 @@
 #include "WeatherPlug.h"
 
-const char* ssid = "Minerva";
-const char* password = "La'R0s3s";
+const char* ssid = "ABBA";
+const char* password = "BABA";
 const char* apiKey = "ABCabc123DEFdef456";
 const char* serverUrl = "weatherplug.com";
 const char* serverPort = "443";
@@ -15,5 +15,5 @@ void setup() {
 
 void loop() {
   WeatherPlug.readSensors();
-  WeatherPlug.sendData(5);
+  WeatherPlug.exchangeData(5);
 }

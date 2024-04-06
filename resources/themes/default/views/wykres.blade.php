@@ -63,19 +63,6 @@
             data: salesData,
             options: {
                 animation: false,
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            autoSkip: true,
-                            maxTicksLimit: 10
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
             }
         });
 
