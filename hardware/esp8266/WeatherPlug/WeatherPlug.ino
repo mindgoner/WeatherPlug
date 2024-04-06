@@ -1,7 +1,7 @@
 #include "WeatherPlug.h"
 
-const char* ssid = "Minerva";
-const char* password = "La'R0s3s";
+const char* ssid = "SSID";
+const char* password = "PASSWORD";
 const char* apiKey = "ABCabc123DEFdef456";
 const char* domain = "weatherplug.com";
 
