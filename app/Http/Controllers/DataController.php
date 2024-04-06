@@ -58,12 +58,19 @@ class DataController extends Controller
     {
         // Pobranie danych temperatury 
         $deviceId = $request->deviceId;
-        $readings = Readings::where('deviceid','=', $deviceId)->get(['Temperatura','Cisnienie', 'Wilgotnosc', 'created_at']);
+        $readings = Readings::where('deviceid','=', $deviceId);
 
-        $temperatures = $readings->pluck('Temperatura');
-        $pressures = $readings->pluck('Cisnienie');
-        $humidities = $readings->pluck('Wilgotnosc');
-        $timestampsPluck = $readings->pluck('created_at');
+        $toBeDisplayed = [];
+        if(!is_null($request->display)){
+            foreach (json_decode($request->display) as $display) {
+                $toBeDisplayed[$display] = $readings->get([$display])->pluck($display);
+            }
+        }else{
+            // Wyświetl samą temperaturę, jeżeli nie zdefininowano
+            $toBeDisplayed['Temperatura'] = $readings->get(['Temperatura'])->pluck('Temperatura');
+        }
+
+        $timestampsPluck = $readings->get('created_at')->pluck('created_at');
 
         $timestamps = [];
         foreach ($timestampsPluck as $timestamp) {
@@ -71,7 +78,12 @@ class DataController extends Controller
         }
 
         // Wygenerowanie wykresu
-        return view('wykres', compact('temperatures', 'pressures', 'humidities', 'timestamps'));
+        return view('wykres', [
+            'temperatures' => isset($toBeDisplayed['Temperatura']) ? $toBeDisplayed['Temperatura'] : null,
+            'pressures' => isset($toBeDisplayed['Cisnienie']) ? $toBeDisplayed['Cisnienie'] : null,
+            'humidities' => isset($toBeDisplayed['Wilgotnosc']) ? $toBeDisplayed['Wilgotnosc'] : null,
+            'timestamps' => $timestamps
+        ]);
     }
 
     /**

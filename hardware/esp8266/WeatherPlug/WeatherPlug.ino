@@ -1,19 +1,18 @@
 #include "WeatherPlug.h"
 
-const char* ssid = "ABBA";
-const char* password = "BABA";
+const char* ssid = "Minerva";
+const char* password = "La'R0s3s";
 const char* apiKey = "ABCabc123DEFdef456";
-const char* serverUrl = "weatherplug.com";
-const char* serverPort = "443";
+const char* domain = "weatherplug.com";
 
-WeatherPlug WeatherPlug(ssid, password, apiKey, serverUrl, serverPort);
+WeatherPlug WeatherPlug(ssid, password, apiKey, domain);
 
 void setup() {
-  Serial.begin(9600);
-  WeatherPlug.connectWiFi();
+  Serial.begin(115200);
+  WeatherPlug.testWiFiConnection();
 }
 
 void loop() {
-  WeatherPlug.readSensors();
-  WeatherPlug.exchangeData(5);
+  WeatherPlug.readSimulatedSensors();
+  WeatherPlug.exchangeData();
 }

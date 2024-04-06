@@ -1,36 +1,51 @@
 #include "WeatherPlug.h"
-#include <WiFiClientSecure.h>
+#include <Arduino.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
+#include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
 
 // Inicjalizacja obiektu klienta
-WiFiClientSecure client;
+ESP8266WiFiMulti WiFiMulti;
 
-WeatherPlug::WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl, const char* serverPort) {
-  this->ssid = ssid;
-  this->password = password;
-  this->apiKey = apiKey;
-  this->serverUrl = serverUrl;
-  this->serverPort = serverPort;
+WeatherPlug::WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* domain) {
 
+  // Debug types:
+  this->debug = "readings"; // Allowed: connection, readings, all
+  
   // Default values:
   this->environmentTemperature = 24;
   this->environmentHumidity = 40.0;
   this->atmosphericPressure = 1013.25;
-}
 
-void WeatherPlug::connectWiFi() {
-  // Połączenie z siecią WiFi
+  // Configure
+  this->ssid = ssid;
+  this->password = password;
+  this->apiKey = apiKey;
+  this->domain = domain;
+  this->exchangeDelay = 5000;
+  this->endpointPath = "/api/data";
+  this->updateExchangeUrl();
+  WiFiMulti.addAP(this->ssid, this->password);
+
+}
+void WeatherPlug::updateExchangeUrl(){
+  this->exchangeUrl = "http://"+String(domain)+String(this->endpointPath)+"?deviceMac="+String(this->getMACAddress())+"&Temperatura="+String(this->environmentTemperature)+"&Wilgotnosc="+String(this->environmentHumidity)+"&Cisnienie="+String(this->atmosphericPressure);  
+}
+void WeatherPlug::changeEndpointPath(String endpointPath) {
+  this->endpointPath = endpointPath;
+  this->updateExchangeUrl();
+}
+void WeatherPlug::testWiFiConnection() {
+  // Connectiong to WiFi
+  
+  if(this->debug == "connection" || this->debug == "all") Serial.print("Connecting to WiFi (waiting for status 3): ");
   WiFi.begin(this->ssid, this->password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    if(this->debug == "connection" || this->debug == "all") Serial.print(WiFi.status());
   }
-  Serial.println("Connected to WiFi");
-
-  // Połączenie z serwerem za pomocą zabezpieczonego klienta
-  if (!client.connect(this->serverUrl, atoi(this->serverPort))) {
-    Serial.println("Connection failed");
-    return;
-  }
+  if(this->debug == "connection" || this->debug == "all") Serial.println(" Connected!");
 }
 
 void WeatherPlug::readSensors() {
@@ -38,6 +53,7 @@ void WeatherPlug::readSensors() {
   this->environmentTemperature = 25.5;
   this->environmentHumidity = 60.0;
   this->atmosphericPressure = 1013.25;
+  this->updateExchangeUrl();
 }
 
 void WeatherPlug::readSimulatedSensors() {
@@ -69,6 +85,8 @@ void WeatherPlug::readSimulatedSensors() {
   } else if (this->atmosphericPressure < 1000) {
     this->atmosphericPressure = 1000;
   }
+  this->updateExchangeUrl();
+  if(this->debug == "readings" || this->debug == "all") Serial.println("New readings! Temperature: "+String(environmentTemperature)+"°C Humidity: "+String(environmentHumidity)+"% AtmosphericPressure: "+String(atmosphericPressure)+"hPa.");
 }
 
 
@@ -81,24 +99,44 @@ String WeatherPlug::getMACAddress() {
   return String(macStr);
 }
 
-void WeatherPlug::exchangeData(int postSendDelay) {
-  String url = "/api/data?deviceMac=" + this->getMACAddress() + "&temperature=" + String(this->environmentTemperature) + "&humidity=" + String(this->environmentHumidity) + "&pressure=" + String(this->atmosphericPressure);
-  Serial.print("Requesting URL: ");
-  Serial.println(url);
-  client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-               "Host: " + this->serverUrl + "\r\n" +
-               "Connection: close\r\n\r\n");
-  String response = "";
-  while (client.connected()) {
-  Serial.println("Client connected");
-    if (client.available()) {
-  Serial.println("Client available");
-      response += client.readStringUntil('\r');
+void WeatherPlug::exchangeData() {
+  if(this->debug == "connection" || this->debug == "all") Serial.println("Exchanging data: ");
+  if ((WiFiMulti.run() == WL_CONNECTED)) {  
+    if(this->debug == "connection" || this->debug == "all") Serial.println("[WIFI] Connected to WiFi: OK!");
+
+    // Make clients:
+    WiFiClient client;
+    HTTPClient http;
+    if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] Beginning transmission. Transmitting to endpoint:");
+    if(this->debug == "connection" || this->debug == "all") Serial.println(this->exchangeUrl);
+    if (http.begin(client, this->exchangeUrl)) {
+      if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] Succesfully connected to server via HTTP Protocol. Downloading data...");
+
+      // Downloading data:
+      int httpCode = http.GET();
+      if (httpCode > 0) {
+        if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] Succesfully downloaded data!");
+        
+        if(httpCode == HTTP_CODE_OK){
+          if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] Server responded with success. Data from sensor has been stored in database!");
+          
+        }else{
+          if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] HTTP Code is different than 200 (is equal "+String(httpCode)+"). Transmission FAILED! Check server settings");
+        }
+        
+      }else{
+        if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] Data downloading FAILED! HTTPCode: "+String(httpCode));
+      }
+
+      
+    }else{
+      if(this->debug == "connection" || this->debug == "all") Serial.println("[HTTP] Connecting to server via HTTP Protocol FAILED! ErrorCode: "+String(http.begin(client, this->exchangeUrl)));
     }
+  }else{
+    if(this->debug == "connection" || this->debug == "all") Serial.println("[WIFI] Connected to WiFi: FAILURE! ErrorCode: "+String(WiFiMulti.run()));
   }
-  Serial.println(response);
-  Serial.println("Request complete");
-  delay(postSendDelay * 1000);
+  
+  delay(this->exchangeDelay);
 }
 
 

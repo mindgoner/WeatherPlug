@@ -9,8 +9,11 @@ class WeatherPlug {
     const char* ssid;
     const char* password;
     const char* apiKey;
-    const char* serverUrl;
-    const char* serverPort;
+    const char* domain;
+    int exchangeDelay;
+    String exchangeUrl;
+    String endpointPath;
+    String debug;
 
     float environmentTemperature;
     float environmentHumidity;
@@ -19,11 +22,13 @@ class WeatherPlug {
     WiFiClient client;
 
   public:
-    WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* serverUrl, const char* serverPort);
-    void connectWiFi();
+    WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* domain);
+    void testWiFiConnection();
     void readSensors();
     void readSimulatedSensors();
-    void exchangeData(int postSendDelay);
+    void exchangeData();
+    void updateExchangeUrl();
+    void changeEndpointPath(String endpointPath);
     String getMACAddress();
 
     void setTemperature(float temperature);

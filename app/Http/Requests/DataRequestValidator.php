@@ -24,6 +24,7 @@ class DataRequestValidator extends FormRequest
         return [
             //
             "deviceId" => "required|min:1|exists:sensors,id",
+            "display" => "nullable|string",
         ];
     }
 }
