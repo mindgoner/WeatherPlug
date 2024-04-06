@@ -1,6 +1,7 @@
 @extends('layouts.panel')
 
 @section('content')
+
 <div class="nk-content ">
     <div class="container-fluid">
         <div class="nk-content-inner">
@@ -10,7 +11,15 @@
                         <div class="nk-block-head-content">
                             <h3 class="nk-block-title page-title">Dashboard</h3>
                             <div class="nk-block-des text-soft">
-                                <p>Welcome to DashLite Dashboard Template.</p>
+                                <p>Welcome to DashLite Dashboard Template.</p> 
+                                <a href="{{ route('pokazWykres', ['deviceId' => 1]) }}">Kliknij tutaj, aby pokazać wykres dla urządzenia nr 1.</a>
+                                <a href="{{ route('pokazWykres', ['deviceId' => 16456]) }}">Kliknij tutaj, aby pokazać wykres dla urządzenia nr 16456.</a>
+                            
+                                @if(session('errors'))
+                                    <div class="alert alert-danger">
+                                        {{ session('errors') }}
+                                    </div>
+                                @endif
                             </div>
                         </div><!-- .nk-block-head-content -->
                         <div class="nk-block-head-content">
