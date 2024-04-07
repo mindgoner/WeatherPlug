@@ -16,7 +16,7 @@ class SensorGroupController extends Controller
         if (Auth::id() !== null) {
             $user = Auth::user();
             $sensorGroups = SensorGroup::where('sensorGroupOwner', $user->id)->get();
-            return view('index', compact('sensorGroups'));
+            return view('admin.sensorgroups.sensorGroupView', compact('sensorGroups'));
         } else {
             return redirect()->route('login'); // Przekierowanie do strony logowania
         }
@@ -26,7 +26,7 @@ class SensorGroupController extends Controller
     public function create()
     {
         
-        return view('sensor_groups');
+        return view('admin.sensorgroups.sensorGroupCreate');
     }
 
 

@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/themes/{{ env('APP_THEME') }}/assets/css/dashlite.css?ver=3.2.3">
     <link id="skin-default" rel="stylesheet" href="/themes/{{ env('APP_THEME') }}/assets/css/theme.css?ver=3.2.3">
+
+    @yield('css')
 </head>
 
 <body class="nk-body ui-rounder npc-default has-sidebar ">
@@ -23,6 +25,7 @@
         <div class="nk-main ">
             <div class="nk-wrap ">
                 @include('admin.components.header')
+
                 @yield('content')
             </div>
         </div>

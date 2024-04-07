@@ -7,7 +7,7 @@ return [
         "children" => [
             [
                 'type' => 'item',
-                'route' => 'home',
+                'route' => 'sensor_groups.index',
                 'title' => 'Sensor Groups',
                 'icon' => '<i class="fa-solid fa-calendar"></i>',
                 /*'type' => 'group',

@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor Groups</title>
+@extends('layouts.panel')
+
+
+@section('css')
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
-        .container {
+        .pudelko {
             width: 80%;
-            margin: auto;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top:  72px;
             padding: 20px;
         }
         h1 {
@@ -50,10 +50,11 @@
             cursor: pointer;
         }
     </style>
-</head>
-<body>
+@endsection
 
-<div class="container">
+@section('content')
+
+<div class="pudelko">
     <h1>Sensor Groups</h1>
 
     <a href="{{ route('sensor_groups.create') }}" class="button">Create New Sensor Group</a>
@@ -94,5 +95,4 @@
     @endif
 </div>
 
-</body>
-</html>
+@endsection
