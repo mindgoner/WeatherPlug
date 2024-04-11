@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Add\AddController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DataController;
+use App\Http\Controllers\Data\DataController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\SensorGroupController;
+use App\Http\Controllers\SensorGroup\SensorGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,18 @@ Route::post('/sensor_groups', [SensorGroupController::class, 'store'])->name('se
 
 
 Route::delete('/sensor_groups/{sensor_group}', [SensorGroupController::class, 'destroy'])->name('sensor_groups.destroy');
+
+Route::get('/sensor_groups/edit', [AddController::class, 'edit'])->name('sensor_groups.edit');
+
+Route::get('/sensor_groups/{id}/add_sensors_form', [AddController::class, 'addSensorsForm'])->name('sensor_groups.add_sensors_form');
+
+Route::post('/sensor_groups/{id}/add_sensors', [AddController::class, 'store'])->name('sensor_groups.add_sensors');
+
+Route::get('/sensor_groups/{groupId}/view_added_sensors', [SensorGroupController::class, 'show'])
+    ->name('sensor_groups.show_added_sensors');
+
+Route::put('/sensor_groups/{id}', [AddController::class, 'update'])->name('sensor_groups.update');
+
+Route::delete('/sensor_groups/{id}/remove_sensor', [AddController::class, 'removeSensor'])->name('sensor_groups.remove_sensor');
+
+Route::post('/sensor_groups/rename/{id}', [AddController::class, 'rename'])->name('sensor_groups.rename');

@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\SensorGroup;
+use App\Models\Sensor;
+use Illuminate\Support\Facades\Auth;
 
 class DataRequestValidator extends FormRequest
 {
@@ -11,7 +14,27 @@ class DataRequestValidator extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        // Sprawdź, czy użytkownik jest zalogowany
+        if (!auth()->check()) {
+            return false;
+        }
+
+
+        $deviceId = $this->deviceId;
+        $userId = Auth::id();
+        $helperId = Sensor::find($deviceId);
+        $desiredColumnValue = $helperId->sensorBelongsTo;
+        $ghelperId = SensorGroup::find($desiredColumnValue);
+        $desiredColumnOwner= $ghelperId->sensorGroupOwner;
+
+        if($userId!=$desiredColumnOwner){
+            return false;
+        }
+        
+        
+        return True;
+       
+ 
     }
 
     /**

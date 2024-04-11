@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SensorGroup extends Model
 {
-    protected $table = 'sensorgroups';
+    protected $table = 'sensorgroup';
     use HasFactory;
     protected $fillable = [
         'id',
@@ -18,4 +18,8 @@ class SensorGroup extends Model
     public function autor(){
         return User::where('id',$this->sensorGroupOwner)->first();
     }
+
+    
+
+    
 }

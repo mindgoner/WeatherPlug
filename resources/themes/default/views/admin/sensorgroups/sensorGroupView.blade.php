@@ -1,6 +1,5 @@
 @extends('layouts.panel')
 
-
 @section('css')
     <style>
         body {
@@ -49,6 +48,18 @@
             margin-top: 10px;
             cursor: pointer;
         }
+        form.inline-form {
+            display: inline-block;
+            margin: 0;
+        }
+        form.inline-form button[type="submit"] {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
     </style>
 @endsection
 
@@ -80,13 +91,16 @@
                     <td>{{ $sensorGroup->autor()->name }}</td>
                     <td>{{ $sensorGroup->created_at }}</td>
                     <td>
-                        <!-- Formularz usuwania dla każdej grupy czujników -->
-                        <form action="{{ route('sensor_groups.destroy', $sensorGroup->id) }}" method="POST">
+                        <!-- Przyciski działań: Usuwanie, Edycja, Dodawanie sensorów -->
+                        <form action="{{ route('sensor_groups.destroy', $sensorGroup->id) }}" method="POST" class="inline-form">
                             @csrf
                             @method('DELETE')
                             <input type='hidden' value="{{ $sensorGroup->id }}" name="ToBeDelated" />
                             <button type="submit">Delete</button>
                         </form>
+                        <a href="{{ route('sensor_groups.edit', ["id" =>$sensorGroup->id]) }}" class="button">Edit</a>
+                        <a href="{{ route('sensor_groups.add_sensors_form', $sensorGroup->id) }}" class="button">Add Sensors</a>
+                        <a href="{{ route('sensor_groups.show_added_sensors', $sensorGroup->id) }}" class="button">Show Added Sensors</a>
                     </td>
                 </tr>
             @endforeach
@@ -96,3 +110,4 @@
 </div>
 
 @endsection
+

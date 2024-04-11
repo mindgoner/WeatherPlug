@@ -16,6 +16,14 @@ return new class extends Migration
             $table->string('deviceMac');
             $table->timestamps();
         });
+
+        
+        Schema::table('sensors', function (Blueprint $table) {
+            $table->string('sensorBelongsTo')->nullable(); 
+        });
+
+
+
     }
 
     /**
