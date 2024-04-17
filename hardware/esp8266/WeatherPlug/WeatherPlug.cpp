@@ -11,7 +11,7 @@ ESP8266WiFiMulti WiFiMulti;
 WeatherPlug::WeatherPlug(const char* ssid, const char* password, const char* apiKey, const char* domain) {
 
   // Debug types:
-  this->debug = "readings"; // Allowed: connection, readings, all
+  this->debug = "all"; // Allowed: connection, readings, all
   
   // Default values:
   this->environmentTemperature = 24;
@@ -77,6 +77,7 @@ void WeatherPlug::readSimulatedSensors() {
   } else if (this->environmentHumidity < 20) {
     this->environmentHumidity = 20;
   }
+
 
   float pressureChange = random(-2, 3); 
   this->atmosphericPressure += pressureChange;

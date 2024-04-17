@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Statistics</title>
+    <title>Weather Statistics</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -13,7 +13,7 @@
             padding: 0;
         }
         .container {
-            max-width: 800px;
+            max-width: 40%;
             margin: 50px auto;
             padding: 20px;
             background-color: #fff;
@@ -22,8 +22,9 @@
         }
         .card-title {
             color: #333;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
+            text-align: center;
         }
         .chart-container {
             position: relative;
@@ -34,7 +35,6 @@
             height: 400px;
         }
     </style>
-  
 </head>
 <body>
     <div class="container">
@@ -62,17 +62,20 @@
                 label: 'Temperature',
                 data: temperatures,
                 borderColor: '#0fac81',
-                borderWidth: 1
+                borderWidth: 2,
+                fill: false
             }, {
                 label: 'Pressure',
                 data: pressures,
                 borderColor: '#eb6459',
-                borderWidth: 1
+                borderWidth: 2,
+                fill: false
             }, {
                 label: 'Humidity',
                 data: humidities,
                 borderColor: '#254d99',
-                borderWidth: 1
+                borderWidth: 2,
+                fill: false
             }]
         };
 
@@ -81,19 +84,39 @@
             type: 'line',
             data: salesData,
             options: {
-                animation: false,
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1000
+                },
                 scales: {
                     xAxes: [{
                         ticks: {
                             autoSkip: true,
                             maxTicksLimit: 10
+                        },
+                        gridLines: {
+                            display: false
                         }
                     }],
                     yAxes: [{
                         ticks: {
                             beginAtZero: true
+                        },
+                        gridLines: {
+                            color: '#ccc',
+                            lineWidth: 1
                         }
                     }]
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        fontSize: 14,
+                        boxWidth: 20,
+                        padding: 20
+                    }
                 }
             }
         });

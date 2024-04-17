@@ -35,7 +35,7 @@ return [
             [
                 'type' => 'item',
                 'route' => 'login',
-                'title' => 'Sensors',
+                'title' => 'Workspace',
                 'icon' => '<em class="icon ni ni-dashboard-fill"></em>',
             ],
             [

@@ -4,27 +4,25 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteSensorGroupRequest extends FormRequest
+class AddUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        // Sprawdź, czy użytkownik jest zalogowany
-        if (!auth()->check()) {
-             return false;
-        }
-
- 
-        return True;
+        return false;
     }
 
-
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
-            'ToBeDelated'=>'required|int|exists:sensorgroups,id'
+            //
         ];
     }
 }

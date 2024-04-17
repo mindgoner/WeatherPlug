@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SensorGroup extends Model
 {
-    protected $table = 'sensorgroup';
+    protected $table = 'sensorgroups';
     use HasFactory;
     protected $fillable = [
         'id',

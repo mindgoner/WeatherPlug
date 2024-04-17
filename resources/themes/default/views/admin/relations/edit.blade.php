@@ -1,4 +1,6 @@
 @extends('layouts.panel')
+
+
 @section('css')
     <style>
         body {
@@ -10,7 +12,7 @@
         }
         .container {
             width: 80%;
-            margin: 20px auto;
+            margin: center;
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 5px;
@@ -38,27 +40,12 @@
         tr:hover {
             background-color: #ddd;
         }
-        button {
-             display: inline-block;
-             background-color: #4CAF50;
-             color: white;
-             padding: 10px 20px;
-             text-align: center;
-             text-decoration: none;
-             font-size: 16px;
-             margin-right: 10px; /* Add margin between buttons */
-             border-radius: 8px;
-             transition: background-color 0.3s; /* Smooth hover transition */
-             
-        }
-        button:hover {        
-            background-color: #45a049; /* Darker color on hover */
-        }
+
         form.inline-form {
             display: inline-block;
             margin: 0;
         }
-        form.inline-form button[type="submit"] {
+         button[type="submit"] {
             background-color: #f44336;
             color: white;
             border: none;
@@ -67,37 +54,43 @@
             border-radius: 8px;
             transition: background-color 0.3s;
         }
-        form.inline-form button:hover {
+         button:hover {
             background-color: #b22a2a;
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="container">
+<div class="container">
+    <h1>All Users</h1>
+    @if ($users->isEmpty())
+        <p class="no-users">No users found.</p>
+    @else
         <table>
             <thead>
                 <tr>
-                    <th>Group Name</th>
-                    <th>Actions</th>
+                    <th>Name</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <form method="POST" action="{{ route('sensor_groups.store') }}" class="inline-form">
-                            @csrf
-                            <div>
-                                <label for="sensorGroupName">Nazwa grupy:</label>
-                                <input type="text" name="sensorGroupName" id="sensorGroupName">
-                            </div>
-                    </td>
-                    <td>
-                        <button type="submit" class="button">Dodaj grupę</button>
-                        </form>
-                    </td> 
-                </tr>
+                @foreach ($users as $user)
+                    <tr>
+                        <td>{{ $user->autor_1()->name }}</td>
+                        <td>
+                            <!-- Dodaj przycisk usuwania dla każdego użytkownika -->
+                            <form action="{{ route('delete_user', ['id' => $user->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"class="button">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
-    </div>
+    @endif
+    
+</div>
 @endsection
+

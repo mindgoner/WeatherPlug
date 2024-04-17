@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Data\DataController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SensorGroup\SensorGroupController;
+use App\Http\Controllers\relations\user_group_relationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,13 @@ Route::put('/sensor_groups/{id}', [AddController::class, 'update'])->name('senso
 Route::delete('/sensor_groups/{id}/remove_sensor', [AddController::class, 'removeSensor'])->name('sensor_groups.remove_sensor');
 
 Route::post('/sensor_groups/rename/{id}', [AddController::class, 'rename'])->name('sensor_groups.rename');
+
+Route::get('/relations/create', [user_group_relationsController::class, 'create'])->name('relations.create');
+
+Route::get('/relations/show', [user_group_relationsController::class, 'show'])->name('relations.show');
+
+Route::post('/relations/add', [user_group_relationsController::class, 'addMember'])->name('relations.add');
+
+Route::get('/sensor_groups/edit_members', [user_group_relationsController::class, 'removeUserFromColabsShow'])->name('relations.show_members');
+
+Route::delete('/users/{id}', [user_group_relationsController::class, 'deleteUser'])->name('delete_user');

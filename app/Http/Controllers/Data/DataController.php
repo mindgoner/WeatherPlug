@@ -10,7 +10,7 @@ use App\Http\Requests\DataRequestValidator;
 
 class DataController extends Controller
 {
-    //Dodanie nowego sensora
+    // Dodanie nowego sensora
     public function store(Request $request)
     {
         $Sensor = Sensor::where('deviceMac','=',$request->input('deviceMac'))->first();
@@ -33,7 +33,7 @@ class DataController extends Controller
         return response()->json($request->all());
     }
 
-    //Display wykresów
+    // Display wykresów
     public function show(DataRequestValidator $request)
     {
         // Pobranie danych temperatury 

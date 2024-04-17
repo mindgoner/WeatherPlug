@@ -3,9 +3,9 @@
 @section('css')
 <style>
     /* Dodaj style do kontenera sensorów */
-    .sensor-container {
+    .container {
         width: 80%;
-        margin: 0 auto;
+        margin: center;
         margin-top:  120px;
         padding: 20px;
         background-color: #f9f9f9;
@@ -34,6 +34,11 @@
         margin-top: 20px;
     }
 
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
     /* Styl komórek nagłówka */
     .header-cell {
         background-color: #f2f2f2;
@@ -60,6 +65,7 @@
         min-width: 120px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         z-index: 1;
+      
     }
 
     /* Styl linku w rozwijanym menu */
@@ -68,6 +74,7 @@
         padding: 10px;
         text-decoration: none;
         display: block;
+        
     }
 
     /* Styl linku w rozwijanym menu po najechaniu */
@@ -83,7 +90,7 @@
 @endsection
 
 @section('content')
-<div class="sensor-container">
+<div class="container">
     <h1>Added Sensors</h1>
 
     @if($sensors->isEmpty())
@@ -105,10 +112,10 @@
                 <td class="dropdown">
                     <span>Pomiary</span>
                     <div class="dropdown-menu">
-                        <a href="http://127.0.0.1:8000/wykres?deviceId={{ $sensor->id }}&display=[%22Cisnienie%22]">Ciśnienie</a>
-                        <a href="http://127.0.0.1:8000/wykres?deviceId={{ $sensor->id }}&display=[%22Temperatura%22]">Temperatura</a>
-                        <a href="http://127.0.0.1:8000/wykres?deviceId={{ $sensor->id }}&display=[%22Wilgotnosc%22]">Wilgotność</a>
-                        <a href="http://127.0.0.1:8000/wykres?deviceId={{ $sensor->id }}&display=[%22Temperatura%22%2C%22Cisnienie%22%2C%22Wilgotnosc%22]">Wszystko</a>
+                        <a href="{{ url('/wykres?deviceId=' . $sensor->id . '&display=[%22Cisnienie%22]') }}">Ciśnienie</a>
+                        <a href="{{ url('/wykres?deviceId=' . $sensor->id . '&display=[%22Temperatura%22]') }}">Temperatura</a>
+                        <a href="{{ url('/wykres?deviceId=' . $sensor->id . '&display=[%22Wilgotnosc%22]') }}">Wilgotność</a>
+                        <a href="{{ url('/wykres?deviceId=' . $sensor->id . '&display=[%22Temperatura%22%2C%22Cisnienie%22%2C%22Wilgotnosc%22]') }}">Wszystko</a>
                     </div>
                 </td>
             </tr>

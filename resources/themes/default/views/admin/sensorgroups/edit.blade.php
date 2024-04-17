@@ -3,16 +3,15 @@
 @section('css')
 <style>
     /* Dodaj style do kontenera edycji grupy czujników */
-    .edit-sensor-group-container {
-        width: 80%;
-        margin: 0 auto;
-        margin-top:  120px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+    .container {
+            width: 80%;
+            margin: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-top:  72px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
     /* Styl nagłówka */
     h1 {
@@ -57,24 +56,28 @@
         background-color: #f44336;
         color: white;
         border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
+        padding: 5px 10px;
         cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s;
     }
 
     .remove-button:hover {
-        background-color: #cc0000;
+        background-color: #b22a2a;
     }
 
     /* Dodaj styl do przycisku "Save Changes" */
     .save-changes-button {
-        background-color: #4CAF50; /* Zielony kolor */
+        display: inline-block;
+        background-color: #4CAF50;
         color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-left: 20px; /* Dodaj margines z lewej strony */
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin-left: 10px; /* Add margin between buttons */
+        border-radius: 8px;
+        transition: background-color 0.3s; /* Smooth hover transition */
     }
 
     .save-changes-button:hover {
@@ -84,7 +87,7 @@
 @endsection
 
 @section('content')
-<div class="edit-sensor-group-container">
+<div class="container">
     <h1>Edit Sensor Group</h1>
 
     <form action="{{ route('sensor_groups.rename', $sensorGroup->id) }}" method="POST">
@@ -131,5 +134,6 @@
             </table>
         @endif
     </div>
+    
 </div>
 @endsection

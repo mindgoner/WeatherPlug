@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Add;
 
-use Illuminate\Http\Request;
 use App\Models\Sensor;
 use App\Models\SensorGroup;
 use App\Http\Requests\DeleteSensorRequest;
@@ -10,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddSensorRequest;
 use App\Http\Requests\EditRequest;
 use App\Http\Requests\RenameRequest;
+use App\Models\user_group_relations;
 
 class AddController extends Controller
 {
@@ -18,7 +18,7 @@ class AddController extends Controller
     {
         
         $sensorId = $request->input('sensor_id');
-       
+        
         Sensor::where('id', $sensorId)->update(['sensorBelongsTo' => $groupId]);
     
         return redirect()->route('sensor_groups.index')->with('success', 'Sensor added to the group successfully');
@@ -27,15 +27,32 @@ class AddController extends Controller
     //Edytowanie sensorów 
     public function edit(EditRequest $request)
     {
-        $id=$request->input('id');
+        $id = $request->input('id');
+        
         // Znajdź grupę czujników na podstawie przekazanego ID
         $sensorGroup = SensorGroup::findOrFail($id);
-    
+        
+        // Sprawdź, czy zalogowany użytkownik ma status admin dla tej grupy (uzupełnianie funkcji)
+        $loggedInUserId = auth()->id();
+        $isAdmin = user_group_relations::where('userId', $loggedInUserId)
+                                       ->where('groupId', $id)
+                                       ->where('status', 'admin')
+                                       ->exists();
+        
+        // Jeśli użytkownik nie jest administratorem tej grupy, przekieruj lub zwróć odpowiedni komunikat (uzupełnianie funkcji)
+        if (!$isAdmin) {
+            return redirect()->back()->with('error', 'You do not have permission to edit this group.');
+        }
+        
         // Pobierz sensor przypisany do grupy
         $sensors = Sensor::where('sensorBelongsTo', $id)->get();
     
-        return view('admin.sensorgroups.edit', compact('sensorGroup', 'sensors'));
+        // Pobierz użytkowników dodanych do grupy
+        $groupMembers = user_group_relations::where('groupId', $id)->get();
+    
+        return view('admin.sensorgroups.edit', compact('sensorGroup', 'sensors', 'groupMembers'));
     }
+    
 
     //Zmiana nazwy grupy
     public function rename(RenameRequest $request, $id)
