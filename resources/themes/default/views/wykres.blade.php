@@ -5,36 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Statistics</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fc;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 40%;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .card-title {
-            color: #333;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .chart-container {
-            position: relative;
-            margin-top: 20px;
-        }
-        #salesStatistics {
-            width: 100%;
-            height: 400px;
-        }
-    </style>
+    <link href="{{url('css/wykresy.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="container">

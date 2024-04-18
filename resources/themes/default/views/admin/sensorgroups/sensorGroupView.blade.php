@@ -1,101 +1,13 @@
 @extends('layouts.panel')
 
-
-@section('css')
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            
-            
-        }
-        .container {
-            width: 80%;
-            margin: center;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            margin-top:  72px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: left;
-            
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-        }
-        a.button {
-             display: inline-block;
-             background-color: #4CAF50;
-             color: white;
-             padding: 10px 20px;
-             text-align: center;
-             text-decoration: none;
-             font-size: 16px;
-             margin-right: 10px; /* Add margin between buttons */
-             border-radius: 8px;
-             transition: background-color 0.3s; /* Smooth hover transition */
-             
-        }
-        a.button:hover {        
-            background-color: #45a049; /* Darker color on hover */
-        }
-        form.inline-form {
-            display: inline-block;
-            margin: 0;
-        }
-        form.inline-form button[type="submit"] {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-        form.inline-form button:hover {
-            background-color: #b22a2a;
-        }
-
-        .create-button {
-            border: none;
-            background-color: #4CAF50;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 10px;
-            font-size: 16px;
-            border-radius: 8px;
-            color: white;
-            transition: background-color 0.3s
-        }
-        .create-button:hover {
-             background-color: #005f7e;
-        }
-        
-    </style>
-@endsection
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url('css/group_view.css') }}" rel="stylesheet">
+    <link href="{{url('css/global.css') }}" rel="stylesheet">
+</head>
 
 @section('content')
-
 <div class="container">
     <h1>Sensor Groups</h1>
     <a href="{{ route('sensor_groups.create') }}" class=" create-button">Create New Sensor Group</a>
@@ -103,7 +15,7 @@
         <p>No sensor groups found.</p>
     @else
         <table>
-            <thead>
+   
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -114,7 +26,7 @@
                 <th>Show functions</th>
                 <th>Delate</th> <!-- Dodaj kolumnę z działaniami -->
             </tr>
-            </thead>
+
             <tbody>
             @foreach($sensorGroups as $sensorGroup)
                 <tr>

@@ -1,90 +1,11 @@
 @extends('layouts.panel')
 
-@section('css')
-<style>
-    /* Dodaj style do kontenera edycji grupy czujników */
-    .container {
-            width: 80%;
-            margin: center;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            margin-top:  72px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-    /* Styl nagłówka */
-    h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    /* Styl tekstu, gdy brak przypisanego czujnika */
-    .no-sensor {
-        font-size: 18px;
-        color: #777;
-    }
-
-    /* Styl tabeli */
-    .sensor-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    /* Styl komórek nagłówka */
-    .header-cell {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        padding: 10px 20px;
-    }
-
-    /* Styl komórek */
-    td {
-        padding: 10px 20px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    /* Styl komórek w ostatnim wierszu */
-    tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    /* Styl przycisku usuwania */
-    .remove-button {
-        background-color: #f44336;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: background-color 0.3s;
-    }
-
-    .remove-button:hover {
-        background-color: #b22a2a;
-    }
-
-    /* Dodaj styl do przycisku "Save Changes" */
-    .save-changes-button {
-        display: inline-block;
-        background-color: #4CAF50;
-        color: white;
-        padding: 5px 10px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        margin-left: 10px; /* Add margin between buttons */
-        border-radius: 8px;
-        transition: background-color 0.3s; /* Smooth hover transition */
-    }
-
-    .save-changes-button:hover {
-        background-color: #45a049; /* Ciemniejszy odcień zielonego */
-    }
-</style>
-@endsection
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url('css/group_edit.css') }}" rel="stylesheet">
+    <link href="{{url('css/global.css') }}" rel="stylesheet">
+</head>
 
 @section('content')
 <div class="container">

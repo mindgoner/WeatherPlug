@@ -1,0 +1,47 @@
+
+/* !!!!!!!!!!!!!!!!!addSensorsForm.blade.php!!!!!!!!!!!!!!!!! */
+
+/* Dodaj style dla kontenera */
+
+    /* Dodaj style dla nagłówka */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+        
+    }
+    th {
+        background-color: #f2f2f2;
+    }    
+
+    /* Dodaj style dla przycisków */
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s; /* Smooth hover transition */
+    }
+    .button:hover {
+        background-color: #45a049; /* Ciemniejszy odcień zielonego */
+    }
+

@@ -1,0 +1,71 @@
+    /* Styl nagłówka */
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Styl tekstu, gdy brak dodanych sensorów */
+    .no-sensors {
+        font-size: 18px;
+        color: #777;
+    }
+
+    /* Styl tabeli */
+    .sensor-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    /* Styl komórek nagłówka */
+    .header-cell {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        padding: 10px 20px;
+    }
+
+    /* Styl komórek */
+    td {
+        padding: 10px 20px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Styl komórek w ostatnim wierszu */
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Styl rozwijanego menu */
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 120px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      
+    }
+
+    /* Styl linku w rozwijanym menu */
+    .dropdown-menu a {
+        color: #333;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+        
+    }
+
+    /* Styl linku w rozwijanym menu po najechaniu */
+    .dropdown-menu a:hover {
+        background-color: #f2f2f2;
+    }
+
+    /* Styl komórki z rozwijanym menu */
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+
+
+
+
