@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Sensor extends Model
 {
-    
-    use HasFactory;
     protected $table = 'sensors';
+    protected $primaryKey = 'sensorId';
 
     protected $fillable = [
-        'deviceMac',
-        'sensorBelongsTo',
+        'deviceMac'
     ];
 
-    
+    public function readings(){
+        return $this->hasMany(Reading::class, 'readingSensorId', 'sensorId');
+    }
 }
